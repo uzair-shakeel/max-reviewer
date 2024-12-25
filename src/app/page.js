@@ -1,5 +1,9 @@
-import Image from "next/image";
+import SignupForm from "./signup/page";
 
 export default function Home() {
-  return <div>hii</div>;
+  return (
+    <div>
+      <SignupForm />
+    </div>
+  );
 }
