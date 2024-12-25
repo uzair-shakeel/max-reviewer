@@ -9,7 +9,6 @@ export default function ReviewPage() {
   const [selectedPeriod, setSelectedPeriod] = useState("3months");
   const router = useRouter();
 
-  // Rating distribution data
   const ratings = [
     { stars: 5, percentage: 90 },
     { stars: 4, percentage: 7 },
@@ -18,15 +17,11 @@ export default function ReviewPage() {
     { stars: 1, percentage: 0 },
   ];
 
-  // Monthly review data
   const monthlyData = [
     { month: "Ene", count: 100 },
     { month: "Feb", count: 150 },
     { month: "Mar", count: 75 },
   ];
-
-  // Calculate max value for graph scaling
-  const maxCount = Math.max(...monthlyData.map((d) => d.count));
 
   return (
     <div className="min-h-screen bg-[#17375F]">
@@ -35,7 +30,6 @@ export default function ReviewPage() {
       <div className="fixed inset-x-4 top-[80px] bottom-0">
         <div className="h-full bg-white rounded-t-xl flex flex-col">
           <div className="p-6 space-y-8">
-            {/* Header */}
             <div className="flex items-center justify-between">
               <h1 className="text-xl font-medium text-gray-700">
                 Reviews totales: 347
@@ -46,7 +40,6 @@ export default function ReviewPage() {
             </div>
 
             <div className="flex gap-5 ">
-              {/* Rating Distribution */}
               <div className="space-y-2 w-[60%]">
                 {ratings.map(({ stars, percentage }) => (
                   <div key={stars} className="flex items-center gap-2">
@@ -60,7 +53,6 @@ export default function ReviewPage() {
                   </div>
                 ))}
               </div>
-              {/* Average Rating */}
               <div className="flex flex-col  items-center justify-center text-center w-[35%]">
                 <div className="text-md font-light text-[#6C7278]">
                   Calificación
@@ -81,7 +73,6 @@ export default function ReviewPage() {
               </div>
             </div>
 
-            {/* Period Selector */}
             <div className="relative">
               <select
                 value={selectedPeriod}
@@ -109,10 +100,8 @@ export default function ReviewPage() {
               </div>
             </div>
 
-            {/* Line Graph */}
             <div className="relative h-48 mt-4 border rounded-lg border-[#C2E0F4] p-4">
               <div className="absolute inset-0">
-                {/* Horizontal grid lines */}
                 {[0, 25, 50, 75, 100, 125, 150].map((value, idx) => (
                   <div
                     key={value}
@@ -125,10 +114,8 @@ export default function ReviewPage() {
                   />
                 ))}
 
-                {/* Line Graph */}
                 <div className="relative h-48 mt-4  rounded-lg  p-4">
                   <div className="absolute inset-0">
-                    {/* Y-axis labels */}
                     <div className="absolute left-0 top-0 h-full flex flex-col justify-between text-sm text-gray-600 -translate-x-2">
                       {[0, 25, 50, 75, 100, 125, 150].reverse().map((value) => (
                         <div key={value} className="text-right">
@@ -137,7 +124,6 @@ export default function ReviewPage() {
                       ))}
                     </div>
 
-                    {/* Horizontal grid lines */}
                     {[0, 25, 50, 75, 100, 125, 150].map((value) => (
                       <div
                         key={value}
@@ -148,7 +134,6 @@ export default function ReviewPage() {
                       />
                     ))}
 
-                    {/* Line chart */}
                     <svg
                       className="absolute inset-0 z-30"
                       viewBox="0 0 100 100"
@@ -167,7 +152,6 @@ export default function ReviewPage() {
                       />
                     </svg>
 
-                    {/* Data points */}
                     {/* {monthlyData.map((data, i) => (
                       <div
                         key={data.month}
@@ -180,7 +164,6 @@ export default function ReviewPage() {
                     ))} */}
                   </div>
 
-                  {/* X-axis labels */}
                   <div className="absolute -bottom-4 px-8 w-full flex justify-between text-sm text-gray-600">
                     {monthlyData.map((data) => (
                       <div key={data.month} className="text-center">

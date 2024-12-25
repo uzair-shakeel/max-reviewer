@@ -5,14 +5,28 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/navbar";
 
+const platforms = [
+  { value: "google", label: "Google Reviews" },
+  { value: "yelp", label: "Yelp" },
+  { value: "tripadvisor", label: "TripAdvisor" },
+];
+
 export default function AddProductPage() {
+  const [formData, setFormData] = useState({
+    productId: "",
+    businessName: "",
+    platform: platforms[0].value,
+    profileLink: "",
+  });
+
   const [scanning, setScanning] = useState(false);
-  const [productId, setProductId] = useState("");
-  const [businessName, setBusinessName] = useState("");
-  const [platform, setPlatform] = useState("google");
-  const [profileLink, setProfileLink] = useState("");
   const videoRef = useRef(null);
   const router = useRouter();
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleScan = async () => {
     setScanning(true);
@@ -26,13 +40,10 @@ export default function AddProductPage() {
         videoRef.current.play();
       }
 
-      // Implement QR code scanning logic here
-      // For demonstration, simulate a successful scan after 3 seconds
       setTimeout(() => {
-        setProductId("SCANNED123");
+        setFormData((prev) => ({ ...prev, productId: "SCANNED123" }));
         setScanning(false);
 
-        // Stop the video stream
         if (videoRef.current && videoRef.current.srcObject) {
           const tracks = videoRef.current.srcObject.getTracks();
           tracks.forEach((track) => track.stop());
@@ -46,15 +57,14 @@ export default function AddProductPage() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log({ productId, businessName, platform, profileLink });
+    console.log(formData);
   };
 
   return (
     <div className="min-h-screen bg-[#17375F]">
       <Navbar />
-
       <div className="fixed inset-x-4 top-[80px] bottom-0">
-        <div className="h-full bg-white rounded-t-xl flex flex-col">
+        <div className="h-full bg-white max-w-md mx-auto rounded-t-xl flex flex-col">
           <main className="flex-1 overflow-auto p-6">
             <div className="flex items-center justify-between mb-6">
               <h2 className="text-lg text-[#6C7278] font-semibold">
@@ -94,51 +104,53 @@ export default function AddProductPage() {
                   </p>
                 </button>
               )}
-              <div className="space-y-1">
-                <p className="text-sm text-gray-600">Número de producto</p>
-                <input
-                  type="text"
-                  placeholder=""
-                  value={productId}
-                  onChange={(e) => setProductId(e.target.value)}
-                  className="w-full px-3 py-2 border border-[#71C9ED] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#71C9ED] focus:border-transparent"
-                />
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm text-gray-600">
-                  Nombre de la sucursal / negocio
-                </p>
-                <input
-                  type="text"
-                  placeholder=""
-                  value={businessName}
-                  onChange={(e) => setBusinessName(e.target.value)}
-                  className="w-full px-3 py-2 border border-[#71C9ED] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#71C9ED] focus:border-transparent"
-                />
-              </div>
+              {[
+                {
+                  label: "Número de producto",
+                  name: "productId",
+                  value: formData.productId,
+                  type: "text",
+                },
+                {
+                  label: "Nombre de la sucursal / negocio",
+                  name: "businessName",
+                  value: formData.businessName,
+                  type: "text",
+                },
+                {
+                  label: "Link del perfil",
+                  name: "profileLink",
+                  value: formData.profileLink,
+                  type: "text",
+                },
+              ].map(({ label, name, value, type }) => (
+                <div key={name} className="space-y-1">
+                  <p className="text-sm text-gray-600">{label}</p>
+                  <input
+                    type={type}
+                    name={name}
+                    value={value}
+                    onChange={handleInputChange}
+                    className="w-full px-3 py-2 border border-[#71C9ED] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#71C9ED] focus:border-transparent"
+                  />
+                </div>
+              ))}
               <div className="space-y-2">
                 <p className="text-sm text-gray-600">
                   Elige la plataforma que quieres configurar
                 </p>
                 <select
-                  value={platform}
-                  onChange={(e) => setPlatform(e.target.value)}
+                  name="platform"
+                  value={formData.platform}
+                  onChange={handleInputChange}
                   className="w-full px-3 py-2 border border-[#71C9ED] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#71C9ED] focus:border-transparent bg-white"
                 >
-                  <option value="google">Google Reviews</option>
-                  <option value="yelp">Yelp</option>
-                  <option value="tripadvisor">TripAdvisor</option>
+                  {platforms.map(({ value, label }) => (
+                    <option key={value} value={value}>
+                      {label}
+                    </option>
+                  ))}
                 </select>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm text-gray-600">Link del perfil</p>
-                <input
-                  type="text"
-                  placeholder=""
-                  value={profileLink}
-                  onChange={(e) => setProfileLink(e.target.value)}
-                  className="w-full px-3 py-2 border border-[#71C9ED] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#71C9ED] focus:border-transparent"
-                />
               </div>
             </form>
           </main>

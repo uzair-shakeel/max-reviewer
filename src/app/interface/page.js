@@ -4,11 +4,9 @@ import Navbar from "../components/navbar";
 const Interface = () => {
   return (
     <div className="min-h-screen bg-[#17375F]">
-      {/* Header */}
       <Navbar />
 
-      {/* Main Content */}
-      <div className="bg-white top-[80px] fixed bottom-0 right-4 left-4 rounded-t-xl">
+      <div className="bg-white top-[80px] fixed max-w-md mx-auto bottom-0 right-4 left-4 rounded-t-xl">
         <main className="px-2 py-6 ">
           <div className=" p-4">
             <div className="flex items-center justify-between mb-4">
@@ -27,7 +25,6 @@ const Interface = () => {
               </button>
             </div>
 
-            {/* Product Card */}
             <div className=" flex w-full  gap-3 border-[#71C9ED] border-[3px] rounded-lg p-3">
               <img
                 src="/scan.svg"
@@ -66,7 +63,6 @@ const Interface = () => {
             </div>
           </div>
         </main>
-        {/* Footer */}
         <footer className="absolute bottom-0 w-full text-center p-4">
           <p className="text-[#6C7278] text-sm">©2025, MaxReviewer</p>
         </footer>
