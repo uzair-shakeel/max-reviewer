@@ -18,13 +18,11 @@ const Navbar = () => {
               src="/bars.svg"
               className="w-[30px] h-[30px] object-contain overflow-hidden"
             />
-            {/* <Menu size={24} /> */}
           </button>
           <img src="/logo.png" alt="MaxReviewer Logo" className="h-8" />
         </div>
         <ProfileDropdown />
       </header>
-      {/* Sidebar */}
       <div className="z-0">
         <Sidebar
           isOpen={isSidebarOpen}

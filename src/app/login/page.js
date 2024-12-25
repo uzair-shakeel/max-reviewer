@@ -2,8 +2,10 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
+  const router = useRouter();
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -35,8 +37,17 @@ const LoginForm = () => {
     });
 
     try {
+      router.push("/interface");
+      // Redirectly directly because there's no API here.
+
       const response = await axios.post("Add your login API here ", formData);
       console.log(response.data);
+      if (response.status === 200 || response.status === 201) {
+        console.log("Login successful:", response.data);
+        router.push("/interface");
+      } else {
+        console.error("Unexpected response:", response);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -101,9 +112,12 @@ const LoginForm = () => {
             </form>
             <div className="mt-6 text-center text-sm">
               <span className="text-gray-600">¿No tienes una cuenta? </span>
-              <a href="#" className="text-[#6DC1E6] font-medium">
+              <button
+                onClick={() => router.push("/signup")}
+                className="text-[#6DC1E6] font-medium"
+              >
                 Regístrate
-              </a>
+              </button>
             </div>
           </div>
           <div className="mt-8 text-center text-[#6C7278] text-sm">

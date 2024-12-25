@@ -156,6 +156,7 @@ export default function AddProductPage() {
           </main>
           <footer className="p-6">
             <button
+              onClick={() => router.push("/reviews")}
               type="submit"
               className="w-full py-3 px-4 bg-[#17375F] hover:bg-[#17375F]/90 text-white rounded-lg font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#17375F] transition-colors"
             >

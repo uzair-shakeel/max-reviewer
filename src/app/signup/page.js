@@ -2,8 +2,11 @@
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 const SignupForm = () => {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     companyName: "",
     email: "",
@@ -140,9 +143,12 @@ const SignupForm = () => {
           </form>
           <div className="mt-6 text-center text-sm">
             <span className="text-gray-600">¿Ya tienes una cuenta? </span>
-            <a href="#" className="text-[#6DC1E6] font-medium">
+            <button
+              onClick={() => router.push("/login")}
+              className="text-[#6DC1E6] font-medium"
+            >
               Inicia sesión
-            </a>
+            </button>
           </div>
           <div className="mt-8 text-center text-[#6C7278] text-sm">
             ©2025, MaxReviewer

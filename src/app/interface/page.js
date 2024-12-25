@@ -1,7 +1,10 @@
-import { Menu, Plus, Edit, BarChart2, Trash2 } from "lucide-react";
+"use client";
 import Navbar from "../components/navbar";
+import { useRouter } from "next/navigation";
 
 const Interface = () => {
+  const router = useRouter();
+
   return (
     <div className="min-h-screen bg-[#17375F]">
       <Navbar />
@@ -17,7 +20,10 @@ const Interface = () => {
                 />
                 <h2 className="text-lg font-semibold">Tus productos (1)</h2>
               </div>
-              <button className="text-[#6DC1E6]">
+              <button
+                onClick={() => router.push("/add-product")}
+                className="text-[#6DC1E6]"
+              >
                 <img
                   src="/plus.svg"
                   className="w-[30px] h-[30px]  object-contain overflow-hidden"

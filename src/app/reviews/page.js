@@ -28,7 +28,7 @@ export default function ReviewPage() {
       <Navbar />
 
       <div className="fixed inset-x-4 top-[80px] bottom-0">
-        <div className="h-full bg-white rounded-t-xl flex flex-col">
+        <div className="h-full bg-white max-w-md mx-auto rounded-t-xl flex flex-col">
           <div className="p-6 space-y-8">
             <div className="flex items-center justify-between">
               <h1 className="text-xl font-medium text-gray-700">

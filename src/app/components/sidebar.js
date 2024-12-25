@@ -7,19 +7,16 @@ const Sidebar = ({ isOpen, onClose }) => {
         isOpen ? "translate-x-0" : "-translate-x-full"
       } z-40`}
     >
-      {/* Header */}
-      <div className="flex items-center py-4 px-3 gap-3">
+      <div className="flex items-center py-6 px-3 gap-3">
         <button className="text-white" onClick={onClose}>
           <img
             src="/bars.svg"
             className="w-[30px] h-[30px] object-contain overflow-hidden"
           />
-          {/* <Menu size={24} /> */}
         </button>
         <img src="/logo.png" alt="MaxReviewer Logo" className="h-8" />
       </div>
 
-      {/* Navigation Links */}
       <nav className="py-4">
         <a
           href="#"
@@ -29,7 +26,6 @@ const Sidebar = ({ isOpen, onClose }) => {
             src="/dashboard.svg"
             className="w-[20px] h-[20px] object-contain overflow-hidden"
           />
-          {/* <LayoutGrid size={20} /> */}
           <span>Mi dashboard</span>
         </a>
 
@@ -41,7 +37,6 @@ const Sidebar = ({ isOpen, onClose }) => {
             src="/settings.svg"
             className="w-[20px] h-[20px] object-contain overflow-hidden"
           />
-          {/* <Settings size={20} /> */}
           <span>Configuración</span>
         </a>
 
@@ -53,7 +48,6 @@ const Sidebar = ({ isOpen, onClose }) => {
             src="/lock.svg"
             className="w-[20px] h-[20px] object-contain overflow-hidden"
           />
-          {/* <Lock size={20} /> */}
           <span>Contraseña</span>
         </a>
 
@@ -65,14 +59,11 @@ const Sidebar = ({ isOpen, onClose }) => {
             src="/tag.svg"
             className="w-[20px] h-[20px] object-contain overflow-hidden"
           />
-          {/* <CreditCard size={20} /> */}
           <span>Planes</span>
         </a>
       </nav>
 
-      {/* Logout Button */}
       <button className="absolute bottom-8 left-0 right-0 mx-4 flex items-center justify-center gap-3 px-4 py-3 bg-[#6DC1E6] text-white rounded-lg">
-        {/* <LogOut size={20} /> */}
         <span>Cerrar sesión</span>
       </button>
     </div>
