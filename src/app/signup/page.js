@@ -24,28 +24,33 @@ const SignupForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const dummyData = {
-      user: {
-        id: "123",
-        role: "admin",
-        permissions: ["create", "edit", "delete"],
-      },
-      products: [
-        { id: "1", name: "Product A" },
-        { id: "2", name: "Product B" },
-      ],
+
+    if (formData.password !== formData.confirmPassword) {
+      alert("Las contraseñas no coinciden.");
+      return;
+    }
+
+    const payload = {
+      firstName: formData.companyName.split(" ")[0],
+      lastName: formData.companyName.split(" ")[1],
+      email: formData.email,
+      password: formData.password,
+      status: 1,
     };
-    console.log({
-      userId: dummyData.user.id,
-      role: dummyData.user.role,
-      firstProduct: dummyData.products[0].name,
-    });
 
     try {
-      const response = await axios.post("Add Your URL here ", formData);
-      console.log(response.data);
+      const response = await axios.post("/api/customers", payload);
+
+      if (response.data?.status === "OK" && response.data?.data) {
+        console.log("User created successfully:", response.data.data);
+        router.push("/success");
+      } else {
+        console.error("Unexpected response structure:", response.data);
+        alert("Error al crear la cuenta. Por favor, inténtalo de nuevo.");
+      }
     } catch (error) {
-      console.error(error);
+      console.error("Error:", error.response?.data || error.message);
+      alert("No se pudo completar el registro. Por favor, verifica tus datos.");
     }
   };
 

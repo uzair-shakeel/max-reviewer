@@ -1,9 +1,29 @@
 "use client";
+import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const Interface = () => {
   const router = useRouter();
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const customerId = "Get the id...";
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await axios.get(`/api/cards/customer/${customerId}`);
+        setProducts(response.data);
+      } catch (error) {
+        console.error("Failed to fetch products:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [customerId]);
 
   return (
     <div className="min-h-screen bg-[#17375F]">

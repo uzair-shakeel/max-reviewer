@@ -4,6 +4,7 @@ import { useState, useRef } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/navbar";
+import jsQR from "jsqr";
 
 const platforms = [
   { value: "google", label: "Google Reviews" },
@@ -30,6 +31,7 @@ export default function AddProductPage() {
 
   const handleScan = async () => {
     setScanning(true);
+
     try {
       const stream = await navigator.mediaDevices.getUserMedia({
         video: { facingMode: "environment" },
@@ -38,17 +40,55 @@ export default function AddProductPage() {
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
         videoRef.current.play();
+
+        videoRef.current.onloadedmetadata = () => {
+          scanQR();
+        };
       }
 
-      setTimeout(() => {
-        setFormData((prev) => ({ ...prev, productId: "SCANNED123" }));
-        setScanning(false);
+      const canvas = document.createElement("canvas");
+      const context = canvas.getContext("2d");
 
+      const scanQR = () => {
+        if (videoRef.current && videoRef.current.readyState === 4) {
+          const video = videoRef.current;
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          context.drawImage(video, 0, 0, canvas.width, canvas.height);
+
+          const imageData = context.getImageData(
+            0,
+            0,
+            canvas.width,
+            canvas.height
+          );
+          const qrCode = jsQR(
+            imageData.data,
+            imageData.width,
+            imageData.height
+          );
+
+          if (qrCode) {
+            const scannedUrl = qrCode.data;
+            const productId = scannedUrl.split("/").pop();
+
+            setFormData((prev) => ({ ...prev, productId }));
+            stopCamera();
+            setScanning(false);
+          } else {
+            requestAnimationFrame(scanQR);
+          }
+        } else {
+          requestAnimationFrame(scanQR);
+        }
+      };
+
+      const stopCamera = () => {
         if (videoRef.current && videoRef.current.srcObject) {
           const tracks = videoRef.current.srcObject.getTracks();
           tracks.forEach((track) => track.stop());
         }
-      }, 3000);
+      };
     } catch (error) {
       console.error("Error accessing camera:", error);
       setScanning(false);

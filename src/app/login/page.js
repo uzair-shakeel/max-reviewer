@@ -11,6 +11,7 @@ const LoginForm = () => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [token, setToken] = useState(null);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -19,37 +20,28 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const dummyData = {
-      user: {
-        id: "456",
-        role: "user",
-        permissions: ["view", "comment"],
-      },
-      sessions: [
-        { id: "s1", device: "Desktop" },
-        { id: "s2", device: "Mobile" },
-      ],
+
+    const payload = {
+      username: formData.email,
+      password: formData.password,
     };
-    console.log({
-      userId: dummyData.user.id,
-      role: dummyData.user.role,
-      firstSessionDevice: dummyData.sessions[0].device,
-    });
 
     try {
-      router.push("/interface");
-      // Redirectly directly because there's no API here.
+      const response = await axios.post("/auth/login", payload);
+      console.log("Response:", response.data);
 
-      const response = await axios.post("Add your login API here ", formData);
-      console.log(response.data);
       if (response.status === 200 || response.status === 201) {
+        const receivedToken = response.data?.data?.token;
+        setToken(receivedToken);
+        localStorage.setItem("authToken", receivedToken);
+
         console.log("Login successful:", response.data);
         router.push("/interface");
       } else {
         console.error("Unexpected response:", response);
       }
     } catch (error) {
-      console.error(error);
+      console.error("Error:", error.response?.data || error.message);
     }
   };
 
