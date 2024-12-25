@@ -127,7 +127,7 @@ export default function ReviewPage() {
                     {[0, 25, 50, 75, 100, 125, 150].map((value) => (
                       <div
                         key={value}
-                        className="absolute w-full border-t z-40 border-gray-200"
+                        className="absolute  border-t z-40 border-gray-200"
                         style={{
                           bottom: `${(value / 150) * 100}%`,
                         }}
@@ -136,19 +136,19 @@ export default function ReviewPage() {
 
                     <svg
                       className="absolute inset-0 z-30"
-                      viewBox="0 0 100 100"
+                      viewBox="0 0 80 70"
                       preserveAspectRatio="none"
                     >
                       <polyline
                         points={monthlyData
                           .map(
-                            (d, i) =>
+                            (data, i) =>
                               `${(i / (monthlyData.length - 1)) * 100},${
-                                100 - (d.count / 150) * 100
+                                100 - (data.count / 150) * 100
                               }`
                           )
                           .join(" ")}
-                        className="stroke-[#FFD600] stroke-[2] fill-none"
+                        className="stroke-[#FFD600] stroke-[2]  fill-none"
                       />
                     </svg>
 
@@ -157,8 +157,8 @@ export default function ReviewPage() {
                         key={data.month}
                         className="absolute w-3 h-3 bg-[#FFD600] rounded-full -translate-x-1/2 -translate-y-1/2"
                         style={{
-                          left: `${(i / (monthlyData.length - 1)) * 100}%`,
-                          bottom: `${(data.count / 150) * 100}%`,
+                          left: `${(i / (monthlyData.length - 1)) * 100}%`, // Horizontal scaling
+                          bottom: `${(data.count / 150) * 100}%`, // Vertical scaling
                         }}
                       />
                     ))} */}

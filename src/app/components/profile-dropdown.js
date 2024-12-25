@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
 import { User, Settings, LogOut } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const ProfileDropdown = () => {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -25,16 +27,21 @@ const ProfileDropdown = () => {
 
       {/* Dropdown Menu */}
       {isOpen && (
-        <div className="absolute right-0 top-16  bg-white rounded-tl-xl rounded-b-xl shadow-lg overflow-hidden">
+        <div className="absolute right-0 top-16  bg-[#E6E6E6] rounded-tl-xl rounded-b-xl shadow-lg overflow-hidden">
           {/* User Info */}
-          <div className="bg-[#E6E6E6] p-4">
-            <div className="flex items-center gap-3">
-              <div className="bg-[#6DC1E6] rounded-lg p-2">
-                <User size={24} className="text-white" />
+          <div className=" p-4">
+            <div className="flex items-center gap-4">
+              <div className="bg-[#6DC1E6] rounded-lg p-2 flex items-center justify-center w-[70px] h-[70px]">
+                <img
+                  src="/profile-blue.svg"
+                  className={` w-[65px] h-[65px] text-[#17375F] rounded-t-lg  object-contain overflow-hidden`}
+                />
               </div>
               <div>
-                <div className="text-sm font-medium">Nombre de usuario</div>
-                <div className="text-xs text-gray-500">
+                <div className="text-[16px] text-[#767676] font-medium">
+                  Nombre de usuario
+                </div>
+                <div className="text-[12px] text-[#767676]">
                   correo@emailserve.com
                 </div>
               </div>
@@ -45,19 +52,25 @@ const ProfileDropdown = () => {
           <div className="py-2">
             <a
               href="#"
-              className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50"
+              className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-300"
             >
-              <Settings size={20} className="text-[#6DC1E6]" />
+              <img
+                src="/settings-gray.svg"
+                className={`w-[20px] h-[20px] object-contain overflow-hidden`}
+              />
               <span>Configuración</span>
             </a>
 
-            <a
-              href="#"
-              className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-50"
+            <button
+              onClick={() => router.push("signup")}
+              className="flex w-full items-center gap-3 px-4 py-2 text-gray-700 hover:bg-gray-300"
             >
-              <LogOut size={20} className="text-[#6DC1E6]" />
+              <img
+                src="/logout.svg"
+                className={`w-[20px] h-[20px] object-contain overflow-hidden`}
+              />
               <span>Cerrar sesión</span>
-            </a>
+            </button>
           </div>
         </div>
       )}
