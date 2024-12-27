@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { toast } from "react-hot-toast";
+import Footer from "../components/footer";
 
 const SignupForm = () => {
   const router = useRouter();
@@ -26,13 +28,13 @@ const SignupForm = () => {
     e.preventDefault();
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Las contraseñas no coinciden.");
+      toast.error("Las contraseñas no coinciden.");
       return;
     }
 
     const payload = {
       firstName: formData.companyName.split(" ")[0],
-      lastName: formData.companyName.split(" ")[1],
+      lastName: formData.companyName.split(" ")[1] || "",
       email: formData.email,
       password: formData.password,
       status: 1,
@@ -42,15 +44,16 @@ const SignupForm = () => {
       const response = await axios.post("/api/customers", payload);
 
       if (response.data?.status === "OK" && response.data?.data) {
-        console.log("User created successfully:", response.data.data);
+        toast.success("¡Cuenta creada exitosamente!");
         router.push("/success");
       } else {
-        console.error("Unexpected response structure:", response.data);
-        alert("Error al crear la cuenta. Por favor, inténtalo de nuevo.");
+        toast.error("Error al crear la cuenta. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
-      console.error("Error:", error.response?.data || error.message);
-      alert("No se pudo completar el registro. Por favor, verifica tus datos.");
+      toast.error(
+        error.response?.data?.message ||
+          "No se pudo completar el registro. Por favor, verifica tus datos."
+      );
     }
   };
 
@@ -146,17 +149,17 @@ const SignupForm = () => {
               Registrarte
             </button>
           </form>
-          <div className="mt-6 text-center text-sm">
-            <span className="text-gray-600">¿Ya tienes una cuenta? </span>
+          <div className="mt-6 flex items-center gap-2 justify-center text-center text-sm">
+            <p className="text-gray-600">¿Ya tienes una cuenta? </p>
             <button
               onClick={() => router.push("/login")}
-              className="text-[#6DC1E6] font-medium"
+              className="text-[#6DC1E6] font-bold"
             >
               Inicia sesión
             </button>
           </div>
-          <div className="mt-8 text-center text-[#6C7278] text-sm">
-            ©2025, MaxReviewer
+          <div className="flex mt-8 justify-center">
+            <Footer />
           </div>
         </div>
       </div>

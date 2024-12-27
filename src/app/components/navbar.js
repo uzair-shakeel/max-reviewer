@@ -6,12 +6,18 @@ import Sidebar from "../components/sidebar";
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  const handleBackdropClick = (e) => {
+    if (e.target.id === "backdrop") {
+      setIsSidebarOpen(false);
+    }
+  };
+
   return (
     <div>
       <header className="flex z-50 justify-between items-center px-4 py-1">
-        <div className="flex items-center gap-3 ">
+        <div className="flex items-center gap-3">
           <button
-            className="text-white "
+            className="text-white"
             onClick={() => setIsSidebarOpen(!isSidebarOpen)}
           >
             <img
@@ -23,12 +29,16 @@ const Navbar = () => {
         </div>
         <ProfileDropdown />
       </header>
-      <div className="z-0">
-        <Sidebar
-          isOpen={isSidebarOpen}
-          onClose={() => setIsSidebarOpen(false)}
+      {/* Backdrop */}
+      {isSidebarOpen && (
+        <div
+          id="backdrop"
+          className="fixed inset-0 bg-black bg-opacity-30 z-30"
+          onClick={handleBackdropClick}
         />
-      </div>
+      )}
+      {/* Sidebar */}
+      <Sidebar isOpen={isSidebarOpen} onClose={() => setIsSidebarOpen(false)} />
     </div>
   );
 };

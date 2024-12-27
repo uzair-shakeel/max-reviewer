@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import Footer from "../components/footer";
 
 const LoginForm = () => {
   const router = useRouter();
@@ -11,6 +13,7 @@ const LoginForm = () => {
     password: "",
   });
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [token, setToken] = useState(null);
 
   const handleChange = (e) => {
@@ -20,6 +23,7 @@ const LoginForm = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     const payload = {
       username: formData.email,
@@ -28,21 +32,34 @@ const LoginForm = () => {
 
     try {
       const response = await axios.post("/auth/login", payload);
-      console.log("Response:", response.data);
 
       if (response.status === 200 || response.status === 201) {
         const receivedToken = response.data?.data?.token;
         setToken(receivedToken);
         localStorage.setItem("authToken", receivedToken);
 
-        console.log("Login successful:", response.data);
+        toast.success("Inicio de sesión exitoso");
         router.push("/interface");
       } else {
-        console.error("Unexpected response:", response);
+        toast.error("Error inesperado. Por favor, inténtalo de nuevo.");
       }
     } catch (error) {
       console.error("Error:", error.response?.data || error.message);
+      toast.error(
+        error.response?.data?.message ||
+          "No se pudo iniciar sesión. Inténtalo nuevamente."
+      );
+    } finally {
+      setLoading(false);
     }
+  };
+
+  const handleGuestLogin = () => {
+    const guestToken = "guest12345";
+    setToken(guestToken);
+    localStorage.setItem("token", guestToken);
+    toast.success("Inicio de sesión como invitado exitoso");
+    router.push("/interface");
   };
 
   return (
@@ -98,22 +115,31 @@ const LoginForm = () => {
               <button
                 type="submit"
                 className="w-full bg-[#253368] text-white py-4 rounded-lg font-medium hover:bg-opacity-90 transition-colors"
+                disabled={loading}
               >
-                Ingresar
+                {loading ? "Cargando..." : "Ingresar"}
               </button>
             </form>
-            <div className="mt-6 text-center text-sm">
-              <span className="text-gray-600">¿No tienes una cuenta? </span>
+            <div className="mt-6 flex items-center gap-2 justify-center text-center text-sm">
+              <p className="text-gray-600">¿No tienes una cuenta? </p>
               <button
                 onClick={() => router.push("/signup")}
-                className="text-[#6DC1E6] font-medium"
+                className="text-[#6DC1E6] font-bold"
               >
                 Regístrate
               </button>
             </div>
+            <div className="mt-4 text-center">
+              <button
+                onClick={handleGuestLogin}
+                className="text-[#6DC1E6] font-medium"
+              >
+                Iniciar sesión como invitado
+              </button>
+            </div>
           </div>
-          <div className="mt-8 text-center text-[#6C7278] text-sm">
-            ©2025, MaxReviewer
+          <div className="flex justify-center mt-8">
+            <Footer />
           </div>
         </div>
       </div>

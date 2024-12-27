@@ -4,8 +4,11 @@ import { useState } from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/navbar";
+import Footer from "../components/footer";
+import Rating from "../components/rating";
+import withAuth from "../utils/with-authenticated";
 
-export default function ReviewPage() {
+const ReviewPage = () => {
   const [selectedPeriod, setSelectedPeriod] = useState("3months");
   const router = useRouter();
 
@@ -31,7 +34,7 @@ export default function ReviewPage() {
         <div className="h-full bg-white max-w-md mx-auto rounded-t-xl flex flex-col">
           <div className="p-6 space-y-8">
             <div className="flex items-center justify-between">
-              <h1 className="text-xl font-medium text-gray-700">
+              <h1 className="text-xl font-[500] text-gray-700">
                 Reviews totales: 347
               </h1>
               <button onClick={() => router.back()}>
@@ -57,18 +60,11 @@ export default function ReviewPage() {
                 <div className="text-md font-light text-[#6C7278]">
                   Calificación
                 </div>
-                <div className="text-3xl font-bold text-[#6C7278]">4.87</div>
+                <div className="text-3xl font-semibold text-[#6C7278]">
+                  4.87
+                </div>
                 <div className="flex justify-center gap-1 mt-2">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <svg
-                      key={star}
-                      className="w-4 h-4 text-[#FFD600]"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                    >
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                    </svg>
-                  ))}
+                  <Rating />
                 </div>
               </div>
             </div>
@@ -178,10 +174,12 @@ export default function ReviewPage() {
 
           {/* Footer */}
           <footer className="mt-auto p-4 text-center">
-            <p className="text-[#6C7278] text-sm">©2025, MaxReviewer</p>
+            <Footer />
           </footer>
         </div>
       </div>
     </div>
   );
-}
+};
+
+export default withAuth(ReviewPage);

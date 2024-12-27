@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import Navbar from "../components/navbar";
 import jsQR from "jsqr";
+import withAuth from "../utils/with-authenticated";
 
 const platforms = [
   { value: "google", label: "Google Reviews" },
@@ -12,7 +13,7 @@ const platforms = [
   { value: "tripadvisor", label: "TripAdvisor" },
 ];
 
-export default function AddProductPage() {
+const AddProductPage = () => {
   const [formData, setFormData] = useState({
     productId: "",
     businessName: "",
@@ -207,4 +208,6 @@ export default function AddProductPage() {
       </div>
     </div>
   );
-}
+};
+
+export default withAuth(AddProductPage);

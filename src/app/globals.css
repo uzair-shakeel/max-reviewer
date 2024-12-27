@@ -56,3 +56,9 @@ input[type="number"]::-webkit-outer-spin-button {
 input[type="number"] {
   -moz-appearance: textfield; /* Firefox */
 }
+
+input[type="number"],
+input[type="text"],
+input[type="email"] {
+  color: black;
+}

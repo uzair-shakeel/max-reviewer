@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import Navbar from "../components/navbar";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Footer from "../components/footer";
+import withAuth from "../utils/with-authenticated";
 
 const Interface = () => {
   const router = useRouter();
@@ -90,11 +92,11 @@ const Interface = () => {
           </div>
         </main>
         <footer className="absolute bottom-0 w-full text-center p-4">
-          <p className="text-[#6C7278] text-sm">©2025, MaxReviewer</p>
+          <Footer />
         </footer>
       </div>
     </div>
   );
 };
 
-export default Interface;
+export default withAuth(Interface);
