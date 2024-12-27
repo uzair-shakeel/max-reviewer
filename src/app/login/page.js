@@ -83,7 +83,7 @@ const LoginForm = () => {
                   placeholder="Email*"
                   value={formData.email}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#6DC1E6]"
+                  className="w-full px-4 py-3 border text-black border-gray-200 rounded-lg focus:outline-none focus:border-[#6DC1E6]"
                 />
               </div>
               <div className="relative">
@@ -93,7 +93,7 @@ const LoginForm = () => {
                   placeholder="Contraseña"
                   value={formData.password}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#6DC1E6]"
+                  className="w-full px-4 py-3 border text-black border-gray-200 rounded-lg focus:outline-none focus:border-[#6DC1E6]"
                 />
                 <button
                   type="button"

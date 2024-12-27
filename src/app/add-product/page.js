@@ -184,10 +184,10 @@ const AddProductPage = () => {
                   name="platform"
                   value={formData.platform}
                   onChange={handleInputChange}
-                  className="w-full px-3 py-2 border border-[#71C9ED] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#71C9ED] focus:border-transparent bg-white"
+                  className="w-full px-3 py-2 border text-black border-[#71C9ED] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#71C9ED] focus:border-transparent bg-white"
                 >
                   {platforms.map(({ value, label }) => (
-                    <option key={value} value={value}>
+                    <option key={value} value={value}>  
                       {label}
                     </option>
                   ))}

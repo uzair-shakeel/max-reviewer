@@ -115,7 +115,7 @@ const SignupForm = () => {
                 placeholder="Contraseña"
                 value={formData.password}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#6DC1E6]"
+                className="w-full px-4 py-3 border text-black border-gray-200 rounded-lg focus:outline-none focus:border-[#6DC1E6]"
               />
               <button
                 type="button"
@@ -132,7 +132,7 @@ const SignupForm = () => {
                 placeholder="Confirma tu contraseña"
                 value={formData.confirmPassword}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:outline-none focus:border-[#6DC1E6]"
+                className="w-full px-4 py-3 border border-gray-200 rounded-lg text-black focus:outline-none focus:border-[#6DC1E6]"
               />
               <button
                 type="button"

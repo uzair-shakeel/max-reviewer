@@ -40,7 +40,9 @@ const Interface = () => {
                   src="/qr-code.svg"
                   className="w-[20px] h-[20px]  object-contain overflow-hidden"
                 />
-                <h2 className="text-lg font-semibold">Tus productos (1)</h2>
+                <h2 className="text-lg font-semibold text-[#6C7278]">
+                  Tus productos (1)
+                </h2>
               </div>
               <button
                 onClick={() => router.push("/add-product")}
@@ -60,7 +62,9 @@ const Interface = () => {
               />
               <div className="flex-1 flex justify-between  items-start">
                 <div>
-                  <h3 className="font-semibold mb-1">Café Córdoba</h3>
+                  <h3 className="font-semibold text-[#6C7278] mb-1">
+                    Café Córdoba
+                  </h3>
                   <p className="text-sm text-gray-600">Escaneos: 2,359</p>
                   <p className="text-sm text-gray-600">Código: 64IV9</p>
                   <p className="text-sm text-gray-600">
