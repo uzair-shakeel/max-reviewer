@@ -4,7 +4,7 @@ import { Eye, EyeOff } from "lucide-react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-import Footer from "../components/footer";
+import Footer from "../components/shared/footer";
 
 const LoginForm = () => {
   const router = useRouter();

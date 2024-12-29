@@ -1,27 +1,45 @@
 "use client";
 import { useEffect, useState } from "react";
-import Navbar from "../components/navbar";
+import Navbar from "../components/shared/navbar";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import Footer from "../components/footer";
+import Footer from "../components/shared/footer";
+import ProductBox from "../components/product/product-box";
 import withAuth from "../utils/with-authenticated";
 
 const Interface = () => {
   const router = useRouter();
+
   const [products, setProducts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const customerId = "Get the id...";
+  const [loading, setLoading] = useState(false);
+  const customerId = "mockCustomerId";
 
   useEffect(() => {
     const fetchProducts = async () => {
-      try {
-        const response = await axios.get(`/api/cards/customer/${customerId}`);
-        setProducts(response.data);
-      } catch (error) {
-        console.error("Failed to fetch products:", error);
-      } finally {
-        setLoading(false);
-      }
+      setLoading(true);
+
+      setTimeout(async () => {
+        try {
+          const mockData = [
+            {
+              id: "1",
+              name: "Café Córdoba",
+              scans: 2359,
+              code: "64IV9",
+              platform: "Google Review",
+            },
+          ];
+
+          setProducts(mockData);
+
+          const response = await axios.get(`/api/cards/customer/${customerId}`);
+          setProducts(response.data);
+        } catch (error) {
+          console.error("Failed to fetch products:", error);
+        } finally {
+          setLoading(false);
+        }
+      }, 1000);
     };
 
     fetchProducts();
@@ -32,16 +50,16 @@ const Interface = () => {
       <Navbar />
 
       <div className="bg-white top-[80px] fixed max-w-md mx-auto bottom-0 right-4 left-4 rounded-t-xl">
-        <main className="px-2 py-6 ">
-          <div className=" p-4">
+        <main className="px-2 py-6">
+          <div className="p-4">
             <div className="flex items-center justify-between mb-4">
               <div className="flex items-center gap-2">
                 <img
                   src="/qr-code.svg"
-                  className="w-[20px] h-[20px]  object-contain overflow-hidden"
+                  className="w-[20px] h-[20px] object-contain overflow-hidden"
                 />
                 <h2 className="text-lg font-semibold text-[#6C7278]">
-                  Tus productos (1)
+                  Tus productos ({products.length})
                 </h2>
               </div>
               <button
@@ -50,49 +68,20 @@ const Interface = () => {
               >
                 <img
                   src="/plus.svg"
-                  className="w-[30px] h-[30px]  object-contain overflow-hidden"
+                  className="w-[30px] h-[30px] object-contain overflow-hidden"
                 />
               </button>
             </div>
 
-            <div className=" flex w-full  gap-3 border-[#71C9ED] border-[3px] rounded-lg p-3">
-              <img
-                src="/scan.svg"
-                className="w-[50px] h-[50px] my-auto object-contain overflow-hidden"
-              />
-              <div className="flex-1 flex justify-between  items-start">
-                <div>
-                  <h3 className="font-semibold text-[#6C7278] mb-1">
-                    Café Córdoba
-                  </h3>
-                  <p className="text-sm text-gray-600">Escaneos: 2,359</p>
-                  <p className="text-sm text-gray-600">Código: 64IV9</p>
-                  <p className="text-sm text-gray-600">
-                    Plataforma: Google Review
-                  </p>
-                </div>
-                <div className="flex flex-col gap-2">
-                  <button className="text-[#6DC1E6]">
-                    <img
-                      src="/clipboard.svg"
-                      className="w-[20px] h-[20px] my-1 object-contain overflow-hidden"
-                    />
-                  </button>
-                  <button className="text-[#6DC1E6]">
-                    <img
-                      src="/chart.svg"
-                      className="w-[20px] h-[20px] my-1 object-contain overflow-hidden"
-                    />
-                  </button>
-                  <button className="text-[#6DC1E6]">
-                    <img
-                      src="/bin.svg"
-                      className="w-[20px] h-[20px] my-1 object-contain overflow-hidden"
-                    />
-                  </button>
-                </div>
-              </div>
-            </div>
+            {loading ? (
+              <p className="text-center text-gray-600">Loading...</p>
+            ) : products.length === 0 ? (
+              <p className="text-center text-gray-600">No products found.</p>
+            ) : (
+              products.map((product) => (
+                <ProductBox key={product.id} product={product} />
+              ))
+            )}
           </div>
         </main>
         <footer className="absolute bottom-0 w-full text-center p-4">

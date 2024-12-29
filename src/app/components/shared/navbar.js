@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
-import ProfileDropdown from "../components/profile-dropdown";
-import Sidebar from "../components/sidebar";
+import ProfileDropdown from "./profile-dropdown";
+import Sidebar from "./sidebar";
 
 const Navbar = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
